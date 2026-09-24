@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101413">
+  <meta name="description" content="素数のらせん・星形・マンデルブロ集合など、数と円が描く模様を切り替えて眺める。つまみで数を変えると、模様がその場で形を変える。">
+  <title>数の模様 — つまみで変わる数学の模様</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="数の模様">
+  <meta property="og:title" content="数の模様 — つまみで変わる数学の模様">
+  <meta property="og:description" content="素数のらせん・星形・マンデルブロ集合など、数と円が描く模様を切り替えて眺める。つまみで数を変えると、模様がその場で形を変える。">
+  <meta property="og:url" content="https://t-of.github.io/number-patterns/">
+  <meta property="og:image" content="https://t-of.github.io/number-patterns/icons/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- apple-mobile-web-app-status-bar-style は付けない（black-translucent だと iOS 26 で上部が隠れる） -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="数の模様">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./webapp-kit/webapp-kit.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="bar">
+      <h1 class="bar__title">数の模様</h1>
+      <button class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="音: オン"><svg viewBox="0 0 24 24" id="soundIcon" aria-hidden="true"></svg></button>
+      <button class="icon-btn" id="helpBtn" aria-label="遊び方">?</button>
+    </header>
+
+    <div class="board" id="board">
+      <canvas id="art" aria-label="模様。タップするともう一度描く"></canvas>
+      <canvas id="over" aria-hidden="true"></canvas>
+    </div>
+
+    <section class="info" aria-live="polite">
+      <h2 class="info__name" id="figName"></h2>
+      <p class="info__desc" id="figDesc"></p>
+      <p class="info__sum" id="figSum"></p>
+    </section>
+
+    <nav class="figs" id="figs" aria-label="図を選ぶ"></nav>
+
+    <section class="knobs" id="knobs"></section>
+
+    <div class="actions">
+      <button class="btn btn--primary" id="redraw">もう一度描く</button>
+      <button class="btn" id="random">おまかせ</button>
+      <button class="btn" id="home" hidden>全体に戻す</button>
+    </div>
+
+    <footer class="foot">
+      <div class="foot__actions">
+        <button class="pill" data-wak="install" hidden>アプリにする</button>
+        <button class="pill" data-wak="share" id="share">共有</button>
+      </div>
+      <p class="credit"><a href="/">T.OF...</a> のアプリ</p>
+    </footer>
+  </main>
+
+  <div class="help" id="help" hidden>
+    <div class="help__box" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <h2 id="helpTitle">遊び方</h2>
+      <ol>
+        <li>下の図の名前をタップすると、その模様を描き始める。</li>
+        <li>つまみを動かすと、模様がその場で変わる。「おまかせ」で、でたらめな値を試せる。</li>
+        <li>図をタップすると、もう一度はじめから描く（マンデルブロ集合は、タップした所を拡大する）。</li>
+      </ol>
+      <p class="help__note">素数の模様を「横に並べる」にして 1 行の数を 6 にすると、2 と 3 のほかの素数が 2 本の縦の列にだけ並ぶ。PC では ← → で図を切り替え、R でもう一度描く。</p>
+      <button class="btn btn--primary" id="helpClose">はじめる</button>
+    </div>
+  </div>
+
+  <script src="./webapp-kit/webapp-kit.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

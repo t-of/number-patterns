@@ -1,0 +1,145 @@
+:root {
+  --bg: #101413;
+  --fg: #ecefe9;
+  --muted: #98a29d;
+  --accent: #7ee0c3;
+  --line: rgba(255, 255, 255, 0.12);
+  --surface: rgba(255, 255, 255, 0.06);
+  --wak-bg: #18201e;
+  --wak-fg: var(--fg);
+  --wak-muted: var(--muted);
+  --wak-accent: var(--accent);
+  --wak-accent-fg: #06201a;
+}
+
+* { box-sizing: border-box; }
+
+/* Safari 26 の上下バーの色は html の背景から取られる。body と同じ色にしておく */
+html { background-color: var(--bg); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+/* 画面の端に置くものはセーフエリアの分だけ内側に。高さは 100vh ではなく 100dvh。
+   上から 帯 → 描く場所 → 図の説明 → 図を選ぶ → つまみ → 操作 → 下 */
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 504px;
+  margin: 0 auto;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  touch-action: manipulation;   /* ダブルタップ拡大を止める */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bar { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.bar__title { margin: 0 auto 0 0; font-size: 18px; letter-spacing: 0.04em; }
+.icon-btn {
+  width: 44px; height: 44px; flex: none;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 50%;
+  font-size: 18px; font-weight: 700; cursor: pointer;
+}
+.icon-btn svg { width: 22px; height: 22px; display: block; margin: auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn[aria-pressed="false"] { color: var(--muted); }
+
+/* 描く場所: 幅いっぱいの正方形（最大 480px） */
+.board {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  align-self: center;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0b0e0d;
+  cursor: pointer;
+}
+.board canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#over { pointer-events: none; }
+.board--zoom { cursor: zoom-in; }
+
+.info { min-height: 72px; }
+.info__name { margin: 0; font-size: 17px; }
+.info__desc { margin: 2px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.info__sum { margin: 4px 0 0; font-size: 14px; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* 図を選ぶ: はみ出したら横にスクロール */
+.figs {
+  display: flex; gap: 6px;
+  overflow-x: auto; scrollbar-width: none;
+  margin: 0 -12px; padding: 0 12px;
+  scroll-padding: 0 12px;
+}
+.figs::-webkit-scrollbar { display: none; }
+.figs .btn { flex: none; }
+
+.btn {
+  min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 12px;
+  font-size: 15px; cursor: pointer; white-space: nowrap;
+}
+.btn:active { background: rgba(255, 255, 255, 0.12); }
+.btn[aria-pressed="true"] { border-color: var(--accent); background: rgba(126, 224, 195, 0.16); color: #d6fff2; }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: #06201a; font-weight: 700; }
+.btn--primary:active { background: #a4ecd6; }
+
+/* つまみ */
+.knobs { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.knob__label { font-size: 13px; font-weight: 600; color: var(--muted); }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; margin-top: 6px; }
+.seg .btn { padding: 0 6px; font-size: 14px; }
+.knob__row { display: flex; align-items: center; gap: 8px; }
+.knob__row .knob__label { margin-right: auto; }
+.step {
+  width: 44px; height: 44px; flex: none;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 12px;
+  font-size: 20px; cursor: pointer; touch-action: none;
+}
+.step:active { background: rgba(255, 255, 255, 0.12); }
+.step:disabled { opacity: 0.35; cursor: default; }
+.knob output { min-width: 3.2em; text-align: center; font-size: 17px; font-variant-numeric: tabular-nums; }
+.knob input[type="range"] { width: 100%; height: 36px; margin: 2px 0 0; accent-color: var(--accent); }
+
+.actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; margin-top: 4px; }
+
+.foot { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.foot__actions { display: flex; gap: 8px; }
+.pill {
+  min-height: 44px;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 0 16px; font-size: 14px; cursor: pointer;
+}
+.credit { margin: 0; font-size: 13px; color: var(--muted); }
+.credit a { color: inherit; display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; }
+
+/* 遊び方の重ね画面。隠すときは display: none（[hidden]） */
+.help {
+  position: fixed; inset: 0; z-index: 10;
+  display: grid; place-items: center;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(6, 8, 8, 0.72);
+  overflow-y: auto;
+}
+.help__box {
+  width: min(100%, 420px);
+  background: #18201e; border: 1px solid var(--line); border-radius: 18px;
+  padding: 20px; line-height: 1.6;
+}
+.help__box h2 { margin: 0 0 8px; font-size: 18px; }
+.help__box ol { margin: 0 0 12px; padding-left: 1.3em; font-size: 15px; }
+.help__box li + li { margin-top: 6px; }
+.help__note { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+.help__box .btn { width: 100%; }
