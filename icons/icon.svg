@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#101413"/><text x="256" y="256" dy=".35em" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="280" fill="#eceef3">数</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#182420"/>
+    <stop offset="1" stop-color="#0a0d0c"/>
+  </linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<circle cx="256" cy="256" r="172" fill="none" stroke="#7ee0c3" stroke-opacity="0.22" stroke-width="4"/>
+<path d="M 256.00,84.00 L 330.63,410.97 L 121.52,148.76 L 423.69,294.27 L 88.31,294.27 L 390.48,148.76 L 181.37,410.97 Z" fill="none" stroke="#7ee0c3" stroke-width="17" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="256.00" cy="84.00" r="11" fill="#d9f7ea"/>
+<circle cx="390.48" cy="148.76" r="11" fill="#d9f7ea"/>
+<circle cx="423.69" cy="294.27" r="11" fill="#d9f7ea"/>
+<circle cx="330.63" cy="410.97" r="11" fill="#d9f7ea"/>
+<circle cx="181.37" cy="410.97" r="11" fill="#d9f7ea"/>
+<circle cx="88.31" cy="294.27" r="11" fill="#d9f7ea"/>
+<circle cx="121.52" cy="148.76" r="11" fill="#d9f7ea"/>
+</svg>
